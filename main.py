@@ -36,8 +36,8 @@ def get_text_messages(message):
             markup = types.InlineKeyboardMarkup()
             btn1 = types.InlineKeyboardButton(text='На карте', url=place_info["way_url"])
             markup.add(btn1)
-            if place_info["off_site"] != "":
-                btn2 = types.InlineKeyboardButton(text='Оффициальный сайт', url=place_info["off_site"])
+            if place_info["of_site"] != "":
+                btn2 = types.InlineKeyboardButton(text='Официальный сайт', url=place_info["of_site"])
                 markup.add(btn2)
             bot.send_message(message.from_user.id,
                              f'{place_info["place"]}',
@@ -50,8 +50,8 @@ def get_text_messages(message):
         markup = types.InlineKeyboardMarkup()
         btn1 = types.InlineKeyboardButton(text='На карте', url=place_info["way_url"])
         markup.add(btn1)
-        if place_info["off_site"] != "":
-            btn2 = types.InlineKeyboardButton(text='Оффициальный сайт', url=place_info["off_site"])
+        if place_info["of_site"] != "":
+            btn2 = types.InlineKeyboardButton(text='Официальный сайт', url=place_info["of_site"])
             markup.add(btn2)
         bot.send_message(message.from_user.id,
                          f'{place_info["place"]}\nОписание:\n{place_info["description"]}',
@@ -64,8 +64,8 @@ def get_text_messages(message):
             markup = types.InlineKeyboardMarkup()
             btn1 = types.InlineKeyboardButton(text='На карте', url=place_info["way_url"])
             markup.add(btn1)
-            if place_info["off_site"] != "":
-                btn2 = types.InlineKeyboardButton(text='Оффициальный сайт', url=place_info["off_site"])
+            if place_info["of_site"] != "":
+                btn2 = types.InlineKeyboardButton(text='Официальный сайт', url=place_info["of_site"])
                 markup.add(btn2)
             bot.send_message(message.from_user.id,
                              f'{place_info["place"]}\nОписание:\n{place_info["description"]}',
