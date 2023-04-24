@@ -21,6 +21,7 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
+    text = ""
     if message.text == 'Привет!':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('Случайное место')
@@ -50,12 +51,17 @@ def get_text_messages(message):
         markup = types.InlineKeyboardMarkup()
         btn1 = types.InlineKeyboardButton(text='На карте', url=place_info["way_url"])
         markup.add(btn1)
+        text = f'{place_info["place"]}\nОписание:\n{place_info["description"]}'
         if place_info["of_site"] != "":
             btn2 = types.InlineKeyboardButton(text='Официальный сайт', url=place_info["of_site"])
             markup.add(btn2)
-        bot.send_message(message.from_user.id,
-                         f'{place_info["place"]}\nОписание:\n{place_info["description"]}',
-                         reply_markup=markup)
+        if place_info["photo"]:
+            bot.send_photo(message.chat.id, open('Photo(places)/' + place_info["photo"], 'rb'), caption=text, reply_markup=markup,
+                           parse_mode="HTML")
+        else:
+            bot.send_message(message.from_user.id,
+                             text,
+                             reply_markup=markup)
     else:
         places = db_cur.execute(f"""SELECT DISTINCT id FROM Places_id WHERE name LIKE LOWER('%{message.text.lower()}%')""").fetchall()
         for place in places:
@@ -67,9 +73,15 @@ def get_text_messages(message):
             if place_info["of_site"] != "":
                 btn2 = types.InlineKeyboardButton(text='Официальный сайт', url=place_info["of_site"])
                 markup.add(btn2)
-            bot.send_message(message.from_user.id,
-                             f'{place_info["place"]}\nОписание:\n{place_info["description"]}',
-                             reply_markup=markup)
+            text = f'{place_info["place"]}\nОписание:\n{place_info["description"]}'
+            print(text)
+            if place_info["photo"]:
+                bot.send_photo(message.chat.id, open('Photo(places)/' + place_info["photo"], 'rb'), caption=text, reply_markup=markup,
+                               parse_mode="HTML")
+            else:
+                bot.send_message(message.from_user.id,
+                                 text,
+                                 reply_markup=markup)
         if len(places) == 0:
             bot.send_message(message.from_user.id,
                              'Я не знаю такого места.')
