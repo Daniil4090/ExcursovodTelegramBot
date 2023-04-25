@@ -32,7 +32,7 @@ def get_text_messages(message):
         directory = 'Places'
         places = len([name for name in os.listdir(directory) if os.path.isfile(os.path.join(directory, name))])
         for i in range(places):
-            with open(f"Places/{i}.json", encoding="utf-8") as place_file:
+            with open(f"Bot/Places/{i}.json", encoding="utf-8") as place_file:
                 place_info = json.load(place_file)
             markup = types.InlineKeyboardMarkup()
             btn1 = types.InlineKeyboardButton(text='На карте', url=place_info["way_url"])
@@ -46,7 +46,7 @@ def get_text_messages(message):
     elif message.text == 'Случайное место':
         directory = 'Places'
         places = len([name for name in os.listdir(directory) if os.path.isfile(os.path.join(directory, name))])
-        with open(f"Places/{random.choice(range(places))}.json", encoding="utf-8") as place_file:
+        with open(f"Bot/Places/{random.choice(range(places))}.json", encoding="utf-8") as place_file:
             place_info = json.load(place_file)
         markup = types.InlineKeyboardMarkup()
         btn1 = types.InlineKeyboardButton(text='На карте', url=place_info["way_url"])
@@ -65,7 +65,7 @@ def get_text_messages(message):
     else:
         places = db_cur.execute(f"""SELECT DISTINCT id FROM Places_id WHERE name LIKE LOWER('%{message.text.lower()}%')""").fetchall()
         for place in places:
-            with open(f"Places/{place[0]}.json", encoding="utf-8") as place_file:
+            with open(f"Bot/Places/{place[0]}.json", encoding="utf-8") as place_file:
                 place_info = json.load(place_file)
             markup = types.InlineKeyboardMarkup()
             btn1 = types.InlineKeyboardButton(text='На карте', url=place_info["way_url"])
